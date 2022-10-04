@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class CommentAnalyzer {
 	
-	private File file;
+	private final File file;
 	
 	public CommentAnalyzer(File file) {
 		this.file = file;
@@ -22,18 +22,24 @@ public class CommentAnalyzer {
 		
 		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 			
-			String line = null;
+			String line;
 			while ((line = reader.readLine()) != null) {
+
+				String lowerCaseLine = line.toLowerCase();
 				
-				if (line.length() < 15) {
+				if (lowerCaseLine.length() < 15) {
 					
 					incOccurrence(resultsMap, "SHORTER_THAN_15");
 
-				} else if (line.contains("Mover")) {
+				}
+
+				if (lowerCaseLine.contains("mover")) {
 
 					incOccurrence(resultsMap, "MOVER_MENTIONS");
 				
-				} else if (line.contains("Shaker")) {
+				}
+
+				if (lowerCaseLine.contains("shaker")) {
 
 					incOccurrence(resultsMap, "SHAKER_MENTIONS");
 				
